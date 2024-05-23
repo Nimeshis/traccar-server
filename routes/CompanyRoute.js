@@ -108,30 +108,28 @@ router.post("/", async (req, res) => {
 });
 
 // Update a company
+// Update a company
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    let companies = await CompanyModel.findOne({ id: id });
+    // Assuming company_id is the field for the company's ID
+    let company = await CompanyModel.findOne({ company_id: id });
 
-    // If no unit is found with the given id, return a 404 error
-    if (!companies) {
-      return res.status(404).json({ message: "Unit not found" });
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
     }
 
-    // Update companies fields with data from request body
-    companies.name = req.body.name || companies.name;
-    companies.address = req.body.address || companies.address;
-    companies.phone = req.body.phone || companies.phone;
-    companies.pan = req.body.pan || companies.pan;
+    // Update company fields
+    company.name = req.body.name || company.name;
+    company.address = req.body.address || company.address;
+    company.phone = req.body.phone || company.phone;
+    company.pan = req.body.pan || company.pan;
 
-    // Save the updated companies
-    companies = await companies.save();
-
-    // Return the updated companies
-    res.json(companies);
+    // Save the updated company
+    const updatedCompany = await company.save();
+    res.json(updatedCompany);
   } catch (err) {
-    // If an error occurs during the update, return a 400 error
     res.status(400).json({ message: err.message });
   }
 });
@@ -141,34 +139,29 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the company by id
-    const companies = await CompanyModel.findOne({ id: id });
+    // Assuming company_id is the field for the company's ID
+    const company = await CompanyModel.findOne({ company_id: id });
 
-    // If no company is found with the given id, return a 404 error
-    if (!companies) {
+    if (!company) {
       return res.status(404).json({ message: "Company not found" });
     }
 
-    // Remove the companies from the database
-    await CompanyModel.deleteOne({ id: id });
-
-    // Return a success message
+    // Remove the company from the database
+    await CompanyModel.deleteOne({ company_id: id });
     res.json({ message: "Company deleted" });
   } catch (err) {
-    // If an error occurs during the delete operation, return a 500 error
     res.status(500).json({ message: err.message });
   }
 });
 
+// Delete all companies
 router.delete("/", async (req, res) => {
   try {
     await CompanyModel.deleteMany({});
-
-    // Return a success message
     res.json({ message: "All companies deleted" });
   } catch (err) {
-    // If an error occurs during the delete operation, return a 500 error
     res.status(500).json({ message: err.message });
   }
 });
+
 module.exports = router;
