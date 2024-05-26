@@ -2,14 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const app = express();
 const allowedOrigins = process.env.CORS_ORIGIN || ["http://localhost:3000"];
 app.use(
   cors({
     origin: allowedOrigins,
   })
 );
-
-const app = express();
 
 // Configure MongoDB URI
 const MONGODB_URI =
