@@ -91,6 +91,9 @@ router.post("/", async (req, res) => {
       name: req.body.name,
       address: req.body.address,
       phone: req.body.phone,
+      country: req.body.country,
+      state: req.body.state,
+      city: req.body.city,
       pan: req.body.pan,
     };
     // Find and increment the current CompanyId counter
@@ -124,6 +127,7 @@ router.put("/:id", async (req, res) => {
     company.name = req.body.name || company.name;
     company.address = req.body.address || company.address;
     company.phone = req.body.phone || company.phone;
+
     company.pan = req.body.pan || company.pan;
 
     // Save the updated company

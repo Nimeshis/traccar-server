@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const CompanyModel = require("../models/UserModel");
+const UserModel = require("../models/UserModel");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 
-// GET all companies
+// GET all users
 router.get("/", async (req, res) => {
   try {
     const users = await UserModel.find();
@@ -17,84 +17,85 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    let companyCounter = await CounterModel.findOneAndUpdate(
+    let userCounter = await CounterModel.findOneAndUpdate(
       { _id: "userId" },
       { $inc: { sequence_value: 1 } },
       { new: true, upsert: true }
     );
 
-    // Assign the incremented sequence value as the id of the new company
+    // Assign the incremented sequence value as the id of the new user
     const newUserData = {
-      user_id: companyCounter.sequence_value,
+      user_id: userCounter.sequence_value,
       email: req.body.email,
       password: req.body.password,
     };
     // Find and increment the current CompanyId counter
 
-    // Create a new Company instance
-    const newCompany = new CompanyModel(newCompanyData);
+    // Create a new User instance
+    const newUser = new UserModel(newUserData);
 
-    // Save the new Company
-    const savedCompany = await newCompany.save();
+    // Save the new User
+    const savedUser = await newUser.save();
 
-    res.status(201).json(savedCompany);
+    res.status(201).json(savedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// Update a company
-// Update a company
+// Update a user
+// Update a user
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Assuming company_id is the field for the company's ID
-    let company = await CompanyModel.findOne({ company_id: id });
+    // Assuming user_id is the field for the user's ID
+    let user = await UserModel.findOne({ user_id: id });
 
-    if (!company) {
-      return res.status(404).json({ message: "Company not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    // Update company fields
-    company.name = req.body.name || company.name;
-    company.address = req.body.address || company.address;
-    company.phone = req.body.phone || company.phone;
-    company.pan = req.body.pan || company.pan;
+    // Update user fields
+    user.name = req.body.name || user.name;
+    user.address = req.body.address || user.address;
+    user.phone = req.body.phone || user.phone;
+    user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
 
-    // Save the updated company
-    const updatedCompany = await company.save();
-    res.json(updatedCompany);
+    // Save the updated user
+    const updatedUser = await user.save();
+    res.json(updatedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// Delete a company
+// Delete a user
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Assuming company_id is the field for the company's ID
-    const company = await CompanyModel.findOne({ company_id: id });
+    // Assuming user_id is the field for the user's ID
+    const user = await UserModel.findOne({ user_id: id });
 
-    if (!company) {
-      return res.status(404).json({ message: "Company not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    // Remove the company from the database
-    await CompanyModel.deleteOne({ company_id: id });
-    res.json({ message: "Company deleted" });
+    // Remove the user from the database
+    await UserModel.deleteOne({ user_id: id });
+    res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Delete all companies
+// Delete all users
 router.delete("/", async (req, res) => {
   try {
-    await CompanyModel.deleteMany({});
-    res.json({ message: "All companies deleted" });
+    await UserModel.deleteMany({});
+    res.json({ message: "All users deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
