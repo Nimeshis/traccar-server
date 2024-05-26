@@ -1,5 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
+const allowedOrigins = process.env.CORS_ORIGIN || ["http://localhost:3000"];
+app.use(
+  cors({
+    origin: allowedOrigins,
+  })
+);
 
 const app = express();
 
