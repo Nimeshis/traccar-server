@@ -4,12 +4,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser'); // Add this line
 
 const app = express();
-const allowedOrigins = process.env.CORS_ORIGIN || ["http://localhost:3000"];
-app.use(
-  cors({
-    origin: allowedOrigins,
-  })
-);
+app.use(cors());
 
 // Configure MongoDB URI
 const MONGODB_URI =
