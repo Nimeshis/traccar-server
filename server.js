@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require('body-parser'); // Add this line
 
 const app = express();
 const allowedOrigins = process.env.CORS_ORIGIN || ["http://localhost:3000"];
@@ -30,13 +31,22 @@ mongoose
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+// Use body-parser middleware to parse request bodies
+app.use(bodyParser.json());
+
 //routes
-const CounterRoutes = require("./routes/CounterRoute");
-const CompanyRoutes = require("./routes/CompanyRoute");
+const counterRoutes = require("./routes/CounterRoute");
+const companyRoutes = require("./routes/CompanyRoute");
+const driverRoutes = require("./routes/DriverRoute");
+const locationRoutes = require('./routes/LocationRoute');
 
 //models
-app.use("/company", CompanyRoutes);
-app.use("/counter", CounterRoutes);
+app.use("/company", companyRoutes);
+app.use("/counter", counterRoutes);
+app.use("/driver", driverRoutes);
+
+// Use '/locations' for the location routes
+app.use("/locations", locationRoutes);
 
 // PORT
 const PORT = 3000;

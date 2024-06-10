@@ -44,7 +44,6 @@ router.post("/", async (req, res) => {
 });
 
 // Update a user
-// Update a user
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
 

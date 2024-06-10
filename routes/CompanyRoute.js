@@ -16,66 +16,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// // POST a new company
-// router.post('/', async (req, res) => {
-//     try {
-//         // Find and increment the current company ID counter
-//         let counter = await CounterModel.findOneAndUpdate(
-//             { _id: 'CompanyId' },
-//             { $inc: { sequence_value: 1 } },
-//             { new: true, upsert: true }
-//         );
-
-//         // Create a new company
-//         const newCompany = new CompanyModel({
-//             id: counter.sequence_value,
-//             name: req.body.name,
-//             address: req.body.address,
-//             phone: req.body.phone,
-//             pan: req.body.pan
-//         });
-
-//         // Save the new company
-//         const savedCompany = await newCompany.save();
-//         res.status(201).json(savedCompany);
-//     } catch (err) {
-//         res.status(400).json({ message: err.message });
-//     }
-// });
-
-// router.post('/', async (req, res) => {
-//     try {
-//       // Find and increment the current CompanyId counter
-//       let CompanyCounter = await CounterModel.findOneAndUpdate(
-//         { _id: 'CompanyId' },
-//         { $inc: { sequence_value: 1 } },
-//         { new: true, upsert: true }
-//       );
-
-//       // Create a new Company
-//       const newCompanyData = {
-//         id: CompanyCounter.sequence_value,
-//         name: req.body.name,
-//         address: req.body.address,
-//         phone: req.body.phone,
-//         pan: req.body.pan
-//       };
-
-//       // Create a new Company instance
-//       const newCompany = new CompanyModel(newCompanyData);
-
-//       // Save the new Company
-//       const savedCompany = await newCompany.save();
-
-//       // Excluding the _id field from the response
-//       const CompanyWithoutId = await CompanyModel.findById(savedCompany._id).select('-_id');
-
-//       res.status(201).json(CompanyWithoutId);
-
-//     } catch (err) {
-//       res.status(400).json({ message: err.message });
-//     }
-//   });
 
 router.post("/", async (req, res) => {
   try {
