@@ -42,7 +42,7 @@ app.use('/driver', driverRoutes);
 app.use('/locations', locationRoutes);
 
 // PORT
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 // Server listening
 app.listen(PORT, '0.0.0.0', () => {  // Make sure the server listens on all network interfaces

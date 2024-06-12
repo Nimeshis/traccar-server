@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const AnnouncementModel = require('../../models/Master/AnnouncementModel');
-const CounterModel = require("../../models/CounterModel");
+const AnnouncementModel = require('../models/Master/AnnouncementModel');
+const CounterModel = require("../models/CounterModel");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());+
@@ -27,6 +27,17 @@ router.post("/", async (req, res) => {
 
     // Assign the incremented sequence value as the id of the new announcement
     const newAnnouncementData = {
+      announcementId: companyCounter.sequence_value,
+      subject: req.body.subject, 
+      announcementDate: req.body.announcementDate, 
+      announcementTime: req.body.announcementTime, 
+      announcementVia: req.body.announcementVia,
+      receiver: req.body.receiver, 
+      schedule: req.body.schedule, 
+      status: req.body.status, 
+
+
+
      
     };
     // Find and increment the current announcementId counter
