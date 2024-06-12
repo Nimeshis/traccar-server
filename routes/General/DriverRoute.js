@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const DriverModel = require("../models/DriverModel");
-const CounterModel = require("../models/CounterModel");
+const DriverModel = require("../General/CompanyRoute");
+const CounterModel = require("../../models/CounterModel");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());

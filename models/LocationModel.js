@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
+  deviceId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  totalDistance: {
+    type: Number,
+    default: 0
+  },
   history: [{
     latitude: {
       type: Number,
@@ -12,12 +21,15 @@ const locationSchema = new mongoose.Schema({
     },
     timestamp: {
       type: Date,
-      required: true,
       default: Date.now
     },
     batteryLevel: {
       type: Number,
-      required: true
+      default: null
+    },
+    distance: {
+      type: Number,
+      default: 0
     }
   }]
 });

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const CompanyModel = require("../models/CompanyModel");
-const CounterModel = require("../models/CounterModel");
+const CompanyModel = require("../../models/General/CompanyModel");
+const CounterModel = require("../../models/CounterModel");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());

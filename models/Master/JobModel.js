@@ -1,0 +1,70 @@
+const mongoose = require('mongoose')
+
+const jobScheme = new mongoose.Schema ({
+    jobId:{
+        type: Number,
+        unique:true
+    },
+    jobName:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    noOfCheckpoint:{
+        type:Number,
+        required:true
+    },
+    noOfSchedule:{
+        type:Number,
+        required:true
+    },
+    scheduleType:{
+        type:String,
+        required:true
+    },
+    valifFrom:{
+        type:String,
+        required:true
+    },
+    jobEndTime:{
+        type:String,
+        required:true
+    },
+    jobStatus:{
+        type:String,
+        required:true
+    },
+    jobStartTime:{  
+        type:String,
+        required:true
+    },
+    tripType:{
+        type:String,
+        required:true
+    },
+    jobType:{
+        type:String,
+        required:true
+    },
+    jobDate:{
+        type:String,
+        required:true
+    },
+    assign:{
+        type:String,
+        required:true
+    },
+    document:{
+        type:String,
+        required:true
+    },
+    alert:{
+        type:String,
+        required:true
+    }
+})
+
+module.exports = mongoose.model('Job',jobScheme)
