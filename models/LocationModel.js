@@ -30,7 +30,11 @@ const locationSchema = new mongoose.Schema({
     distance: {
       type: Number,
       default: 0
-    }
+    },
+  speed:{
+    type: Number,
+    
+  }
   }]
 });
 

@@ -15,7 +15,8 @@ router.post('/', async (req, res) => {
       longitude: coord[1],
       timestamp: new Date(),
       batteryLevel: null, // Replace with actual battery level if available
-      distance: distance || 0 // Use the provided distance if available
+      distance: distance || 0 ,// Use the provided distance if available
+      speed: speed
     }));
   } else if (deviceId && latitude && longitude && distance !== undefined) {
     // Handle single location data format
@@ -24,7 +25,8 @@ router.post('/', async (req, res) => {
       longitude: longitude,
       timestamp: timestamp || new Date(),
       distance: distance,
-      batteryLevel: batteryLevel || null
+      batteryLevel: batteryLevel || null,
+      speed: speed
     });
   } else {
     return res.status(400).send('Invalid input data');
