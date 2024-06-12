@@ -4,7 +4,7 @@ const Location = require('../models/LocationModel');
 
 // Route to save or update the location for a device
 router.post('/', async (req, res) => {
-  const { deviceId, coordinates, distance, latitude, longitude, timestamp, batteryLevel } = req.body;
+  const { deviceId, coordinates, distance, latitude, longitude, timestamp, batteryLevel, speed } = req.body;
 
   let locations = [];
 
