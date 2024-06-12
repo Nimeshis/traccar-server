@@ -8,54 +8,32 @@ const driverSchema = new mongoose.Schema({
   },
   driverName: {
     type: String,
-    required: true,
+    // required: true,
   },
   address: {
     type: String,
-    required: true,
+    // required: true,
   },
   phone: {
     type: String,
-    required: true,
+    // required: true,
   },
   country: {
     type: String,
-    required: true,
+    // required: true,
   },
   state: {
     type: String,
-    required: true,
+    // required: true,
   },
   city: {
     type: String,
-    required: true,
-  },
-  licenseToDrive:{
-    type: String,
-    required: true,
-
+    // required: true,
   },
   licenseNumber: {
     type: String,
-    required: true,
-  },
-  licenseExpiryDate: {
-    type: Date,
     // required: true,
   },
-  licenseIssueDate: {
-    type: Date,
-    // required: true,
-  },
-
-  experince:{
-    type: Number,
-    required: true,
-  },
-//   document:{
-//     type: Image,
-//     // required: true,
-//   },
   created_on: {
     type: String,
     default: function () {
@@ -63,9 +41,7 @@ const driverSchema = new mongoose.Schema({
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth() + 1;
       const day = currentDate.getDate();
-      return `${year}-${month < 10 ? "0" : ""}${month}-${
-        day < 10 ? "0" : ""
-      }${day}`;
+      return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
     },
   },
   modified_on: {
@@ -75,9 +51,7 @@ const driverSchema = new mongoose.Schema({
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth() + 1;
       const day = currentDate.getDate();
-      return `${year}-${month < 10 ? "0" : ""}${month}-${
-        day < 10 ? "0" : ""
-      }${day}`;
+      return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
     },
   },
 });
