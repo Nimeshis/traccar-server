@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
       assign: req.body.assign,
       document: req.body.document,
       alert: req.body.alert
-  };
+    };
 
     const newJob = new Job(newJobData);
     const savedJobs = await newJob.save();
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// UPDATE an job by ID
+// UPDATE a job by ID
 router.put('/:id', async (req, res) => {
   try {
     let job = await Job.findOne({ jobId: req.params.id });
@@ -73,16 +73,21 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Job not found' });
     }
 
-    job.vehicle = req.body.vehicle || job.vehicle;
-    job.category = req.body.category || job.category;
-    job.expenceType = req.body.expenceType || job.expenceType;
-    job.expenceFrom = req.body.expenceFrom || job.expenceFrom;
-    job.expenceTo = req.body.expenceTo || job.expenceTo;
-    job.expenceDate = req.body.expenceDate || job.expenceDate;
-    job.expenceAmount = req.body.expenceAmount || job.expenceAmount;
-    job.expenceDescription = req.body.expenceDescription || job.expenceDescription;
-    job.refrenceNumber = req.body.refrenceNumber || job.refrenceNumber;
-    job.billAttached = req.body.billAttached || job.billAttached;
+    job.jobName = req.body.jobName || job.jobName;
+    job.description = req.body.description || job.description;
+    job.noOfCheckpoint = req.body.noOfCheckpoint || job.noOfCheckpoint;
+    job.noOfSchedule = req.body.noOfSchedule || job.noOfSchedule;
+    job.scheduleType = req.body.scheduleType || job.scheduleType;
+    job.validFrom = req.body.validFrom || job.validFrom;
+    job.jobEndTime = req.body.jobEndTime || job.jobEndTime;
+    job.jobStatus = req.body.jobStatus || job.jobStatus;
+    job.jobStartTime = req.body.jobStartTime || job.jobStartTime;
+    job.tripType = req.body.tripType || job.tripType;
+    job.jobType = req.body.jobType || job.jobType;
+    job.jobDate = req.body.jobDate || job.jobDate;
+    job.assign = req.body.assign || job.assign;
+    job.document = req.body.document || job.document;
+    job.alert = req.body.alert || job.alert;
 
     const updatedJob = await job.save();
     res.json(updatedJob);
@@ -91,7 +96,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE an job by ID
+// DELETE a job by ID
 router.delete('/:id', async (req, res) => {
   try {
     const job = await Job.findOne({ jobId: req.params.id });

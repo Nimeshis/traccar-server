@@ -67,7 +67,7 @@ const jobScheme = new mongoose.Schema ({
     },
     document:{
         type:String,
-        required:true
+        // required:true
     },
     alert:{
         type:String,
