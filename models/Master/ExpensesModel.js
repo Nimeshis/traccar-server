@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const expencesScheme = new mongoose.Schema ({
-  expenceId:{
+const expensesSchema = new mongoose.Schema ({
+  expenseId:{
     type:Number,
     unique: true
   },
@@ -13,31 +13,31 @@ const expencesScheme = new mongoose.Schema ({
     type:String,
     required:true
   },
-  expenceType:{
+  expenseType:{
     type:String,
     required:true
   },
-  expenceFrom:{
-    type:String,
+  expenseFrom:{
+    type:Date,
     required:true
   },
-  expenceTo:{
-    type:String,
+  expenseTo:{
+    type:Date,
     required:true
   },
-  expenceDate:{
-    type:String,
+  expenseDate:{
+    type:Date,
     required:true
   },
-  expenceAmount:{
+  expenseAmount:{
     type:Number,
     required:true
   },
-  expenceDescription:{
+  expenseDescription:{
     type:String,
     required:true
   },
-  refrenceNumber:{
+  referenceNumber:{
     type:Number,
     required:true
   },
@@ -47,4 +47,4 @@ const expencesScheme = new mongoose.Schema ({
   }
 })
 
-module.exports = mongoose.model('Expences',expencesScheme)
+module.exports = mongoose.model('Expenses',expensesSchema)

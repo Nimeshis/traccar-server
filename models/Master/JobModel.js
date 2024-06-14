@@ -25,9 +25,17 @@ const jobScheme = new mongoose.Schema ({
         type:String,
         required:true
     },
-    valifFrom:{
-        type:String,
-        required:true
+    validFrom:{
+        type: String,
+        default: function () {
+          const currentDate = new Date();
+          const year = currentDate.getFullYear();
+          const month = currentDate.getMonth() + 1;
+          const day = currentDate.getDate();
+          return `${year}-${month < 10 ? "0" : ""}${month}-${
+            day < 10 ? "0" : ""
+          }${day}`;
+        },
     },
     jobEndTime:{
         type:String,

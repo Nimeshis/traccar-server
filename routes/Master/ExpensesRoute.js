@@ -1,111 +1,111 @@
 const express = require('express');
 const router = express.Router();
-const Expences = require('../../models/Master/ExpencesModel');
+const Expense = require('../../models/Master/ExpensesModel');
 const CounterModel = require('../../models/CounterModel'); // Assuming you have a counter model for generating unique IDs
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.json());
 
-// GET all expences
+// GET all expenses
 router.get('/', async (req, res) => {
   try {
-    const expences = await Expences.find();
-    res.json(expences);
+    const expenses = await Expense.find();
+    res.json(expenses);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// GET a single expence by ID
+// GET a single expense by ID
 router.get('/:id', async (req, res) => {
   try {
-    const expence = await Expences.findOne({ expenceId: req.params.id });
-    if (!expence) {
+    const expense = await Expense.findOne({ expenseId: req.params.id });
+    if (!expense) {
       return res.status(404).json({ message: 'Expence not found' });
     }
-    res.json(expence);
+    res.json(expense);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// CREATE a new expence
+// CREATE a new expense
 router.post('/', async (req, res) => {
   try {
-    let expenceCounter = await CounterModel.findOneAndUpdate(
-      { _id: 'expenceId' },
+    let expenseCounter = await CounterModel.findOneAndUpdate(
+      { _id: 'expenseId' },
       { $inc: { sequence_value: 1 } },
       { new: true, upsert: true }
     );
 
-    const newExpenceData = {
-      expenceId: expenceCounter.sequence_value,
+    const newExpenseData = {
+      expenseId: expenseCounter.sequence_value,
       vehicle: req.body.vehicle,
       category: req.body.category,
-      expenceType: req.body.expenceType,
-      expenceFrom: req.body.expenceFrom,
-      expenceTo: req.body.expenceTo,
-      expenceDate: req.body.expenceDate,
-      expenceAmount: req.body.expenceAmount,
-      expenceDescription: req.body.expenceDescription,
-      refrenceNumber: req.body.refrenceNumber,
+      expenseType: req.body.expenseType,
+      expenseFrom: req.body.expenseFrom,
+      expenseTo: req.body.expenseTo,
+      expenseDate: req.body.expenseDate,
+      expenseAmount: req.body.expenseAmount,
+      expenseDescription: req.body.expenseDescription,
+      referenceNumber: req.body.referenceNumber,
       billAttached: req.body.billAttached
     };
 
-    const newExpence = new Expences(newExpenceData);
-    const savedExpence = await newExpence.save();
-    res.status(201).json(savedExpence);
+    const newExpense = new Expense(newExpenseData);
+    const savedExpense = await newExpense.save();
+    res.status(201).json(savedExpense);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// UPDATE an expence by ID
+// UPDATE an expense by ID
 router.put('/:id', async (req, res) => {
   try {
-    let expence = await Expences.findOne({ expenceId: req.params.id });
-    if (!expence) {
+    let expense = await Expense.findOne({ expenseId: req.params.id });
+    if (!expense) {
       return res.status(404).json({ message: 'Expence not found' });
     }
 
-    expence.vehicle = req.body.vehicle || expence.vehicle;
-    expence.category = req.body.category || expence.category;
-    expence.expenceType = req.body.expenceType || expence.expenceType;
-    expence.expenceFrom = req.body.expenceFrom || expence.expenceFrom;
-    expence.expenceTo = req.body.expenceTo || expence.expenceTo;
-    expence.expenceDate = req.body.expenceDate || expence.expenceDate;
-    expence.expenceAmount = req.body.expenceAmount || expence.expenceAmount;
-    expence.expenceDescription = req.body.expenceDescription || expence.expenceDescription;
-    expence.refrenceNumber = req.body.refrenceNumber || expence.refrenceNumber;
-    expence.billAttached = req.body.billAttached || expence.billAttached;
+    expense.vehicle = req.body.vehicle || expense.vehicle;
+    expense.category = req.body.category || expense.category;
+    expense.expenseType = req.body.expenseType || expense.expenseType;
+    expense.expenseFrom = req.body.expenseFrom || expense.expenseFrom;
+    expense.expenseTo = req.body.expenseTo || expense.expenseTo;
+    expense.expenseDate = req.body.expenseDate || expense.expenseDate;
+    expense.expenseAmount = req.body.expenseAmount || expense.expenseAmount;
+    expense.expenseDescription = req.body.expenseDescription || expenseDescription.expenceDescription;
+    expense.referenceNumber = req.body.referenceNumber || expense.referenceNumber;
+    expense.billAttached = req.body.billAttached || expense.billAttached;
 
-    const updatedExpence = await expence.save();
-    res.json(updatedExpence);
+    const updatedExpense = await expense.save();
+    res.json(updatedExpense);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// DELETE an expence by ID
+// DELETE an expense by ID
 router.delete('/:id', async (req, res) => {
   try {
-    const expence = await Expences.findOne({ expenceId: req.params.id });
-    if (!expence) {
-      return res.status(404).json({ message: 'Expence not found' });
+    const expense = await Expense.findOne({ expenseId: req.params.id });
+    if (!expense) {
+      return res.status(404).json({ message: 'Expense not found' });
     }
 
-    await Expences.deleteOne({ expenceId: req.params.id });
+    await Expense.deleteOne({ expenseId: req.params.id });
     res.json({ message: 'Expence deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// DELETE all expences
+// DELETE all expenses
 router.delete('/', async (req, res) => {
   try {
-    await Expences.deleteMany({});
-    res.json({ message: 'All expences deleted' });
+    await Expense.deleteMany({});
+    res.json({ message: 'All expenses deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
