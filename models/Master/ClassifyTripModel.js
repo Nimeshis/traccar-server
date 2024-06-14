@@ -39,7 +39,7 @@ const tripScheme = new mongoose.Schema ({
     },
     modifiedby:{
         type:String,
-        required:true
+        // required:true
     },
     modifyDate:{
         type: String,

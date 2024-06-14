@@ -32,29 +32,30 @@ router.get('/:id', async (req, res) => {
 // CREATE a new trip
 router.post('/', async (req, res) => {
   try {
-    let jobCounter = await CounterModel.findOneAndUpdate(
+    let tripCounter = await CounterModel.findOneAndUpdate(
       { _id: 'tripId' },
       { $inc: { sequence_value: 1 } },
       { new: true, upsert: true }
     );
 
-    const newJobData = {
-      tripId: jobCounter.sequence_value,
-      vehicle: req.body.vehicle,
-      category: req.body.category,
-      expenceType: req.body.expenceType,
-      expenceFrom: req.body.expenceFrom,
-      expenceTo: req.body.expenceTo,
-      expenceDate: req.body.expenceDate,
-      expenceAmount: req.body.expenceAmount,
-      expenceDescription: req.body.expenceDescription,
-      refrenceNumber: req.body.refrenceNumber,
-      billAttached: req.body.billAttached
-    };
+ 
 
-    const newTrip = new Trip(newJobData);
-    const savedTrips = await newTrip.save();
-    res.status(201).json(savedTrips);
+    const newTrip = new Trip({
+      tripId: tripCounter.sequence_value,
+      tripStartTime:req.body.tripStartTime,
+      tripEndTime:req.body.tripEndTime,
+      tripLocation:req.body.tripLocation,
+     distance: req.body.distance,
+      tripDuration:req.body.tripDuration,
+      driver:req.body.driver,
+      fuelConsumed:req.body.fuelConsumed,
+      status:req.body.status,
+      modifiedby:req.body.modifiedBy,
+      note:req.body.note
+    });
+
+    const savedTrip = await newTrip.save();
+    res.status(201).json(savedTrip);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

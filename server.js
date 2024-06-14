@@ -31,6 +31,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // Routes
 const counterRoutes = require('./routes/CounterRoute');
+const deviceRoutes = require('./routes/DeviceRoute');
 const companyRoutes = require('./routes/General/CompanyRoute');
 const driverRoutes = require('./routes/General/DriverRoute');
 const locationRoutes = require('./routes/LocationRoute');
@@ -47,6 +48,7 @@ app.use('/expense', expenseRoutes);
 app.use('/announcement', announcementRoutes);
 app.use('/job', jobRoutes);
 app.use('/trip', tripRoutes);
+app.use('/device', deviceRoutes);
 
 // PORT
 const PORT = process.env.PORT || 3002;
