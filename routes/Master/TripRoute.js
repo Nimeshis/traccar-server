@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Trip = require('../../models/Master/TripModel');
+const Trip = require('../../models/Master/ClassifyTripModel');
 const CounterModel = require('../../models/CounterModel'); // Assuming you have a counter model for generating unique IDs
 const bodyParser = require('body-parser');
 

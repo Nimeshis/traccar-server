@@ -37,6 +37,7 @@ const locationRoutes = require('./routes/LocationRoute');
 const announcementRoutes = require('./routes/Master/AnnouncementRoute');
 const expenseRoutes = require('./routes/Master/ExpensesRoute')
 const jobRoutes = require('./routes/Master/JobRoute');
+const tripRoutes = require('./routes/Master/TripRoute')
 // Use routes
 app.use('/company', companyRoutes);
 app.use('/counter', counterRoutes);
@@ -45,6 +46,7 @@ app.use('/locations', locationRoutes);
 app.use('/expense', expenseRoutes);
 app.use('/announcement', announcementRoutes);
 app.use('/job', jobRoutes);
+app.use('/trip', tripRoutes);
 
 // PORT
 const PORT = process.env.PORT || 3002;
