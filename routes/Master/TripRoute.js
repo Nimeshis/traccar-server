@@ -62,6 +62,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE an trip by ID
+// UPDATE a trip by ID
 router.put('/:id', async (req, res) => {
   try {
     let trip = await Trip.findOne({ tripId: req.params.id });
@@ -69,19 +70,19 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Trip not found' });
     }
 
-    trip.vehicle = req.body.vehicle || trip.vehicle;
-    trip.category = req.body.category || trip.category;
-    trip.expenceType = req.body.expenceType || trip.expenceType;
-    trip.expenceFrom = req.body.expenceFrom || trip.expenceFrom;
-    trip.expenceTo = req.body.expenceTo || trip.expenceTo;
-    trip.expenceDate = req.body.expenceDate || trip.expenceDate;
-    trip.expenceAmount = req.body.expenceAmount || trip.expenceAmount;
-    trip.expenceDescription = req.body.expenceDescription || trip.expenceDescription;
-    trip.refrenceNumber = req.body.refrenceNumber || trip.refrenceNumber;
-    trip.billAttached = req.body.billAttached || trip.billAttached;
+    trip.tripStartTime = req.body.tripStartTime || trip.tripStartTime;
+    trip.tripEndTime = req.body.tripEndTime || trip.tripEndTime;
+    trip.tripLocation = req.body.tripLocation || trip.tripLocation;
+    trip.distance = req.body.distance || trip.distance;
+    trip.tripDuration = req.body.tripDuration || trip.tripDuration;
+    trip.driver = req.body.driver || trip.driver;
+    trip.fuelConsumed = req.body.fuelConsumed || trip.fuelConsumed;
+    trip.status = req.body.status || trip.status;
+    trip.modifiedby = req.body.modifiedby || trip.modifiedby;
+    trip.note = req.body.note || trip.note;
 
-    const updatedTrips = await trip.save();
-    res.json(updatedTrips);
+    const updatedTrip = await trip.save();
+    res.json(updatedTrip);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
