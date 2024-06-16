@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
       longitude: coord[1],
       timestamp: new Date(),
       batteryLevel: null, // Replace with actual battery level if available
-      distance: distance || 0 ,// Use the provided distance if available
+      distance: distance || 0, // Use the provided distance if available
       speed: speed
     }));
   } else if (deviceId && latitude && longitude && distance !== undefined) {
@@ -74,6 +74,34 @@ router.get('/:deviceId', async (req, res) => {
     res.send(location);
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+// Route to get location history for a specific device within a certain time frame
+router.get('/history/:deviceId/:startTime/:endTime', async (req, res) => {
+  try {
+    const { deviceId, startTime, endTime } = req.params;
+    const startDate = new Date(startTime);
+    const endDate = new Date(endTime);
+
+    const location = await Location.findOne({
+      deviceId: deviceId,
+      'history.timestamp': { $gte: startDate, $lte: endDate }
+    }, {
+      deviceId: 1,
+      history: {
+        $elemMatch: { timestamp: { $gte: startDate, $lte: endDate } }
+      }
+    });
+
+    if (!location) {
+      return res.status(404).send('No location history found for this device within the specified time frame.');
+    }
+
+    res.json(location);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
   }
 });
 
