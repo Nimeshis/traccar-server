@@ -1,5 +1,5 @@
 //report controller
-const fetchXlsx = require('../utils/fetchXlsx');
+const fetchXlsx = require('../utils/ReportUtils.js');
 
 exports.getReport = async (req, res) => {
   try {

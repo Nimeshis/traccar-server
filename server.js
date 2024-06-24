@@ -32,6 +32,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // Routes
 const counterRoutes = require('./routes/CounterRoute');
 const deviceRoutes = require('./routes/DeviceRoute');
+const alertRoutes = require('./routes/General/AlertRoute');
+const remainderRoutes = require('./routes/General/RemainderRoute');
 const companyRoutes = require('./routes/General/CompanyRoute');
 const driverRoutes = require('./routes/General/DriverRoute');
 const locationRoutes = require('./routes/LocationRoute');
@@ -39,15 +41,23 @@ const announcementRoutes = require('./routes/Master/AnnouncementRoute');
 const expenseRoutes = require('./routes/Master/ExpensesRoute')
 const jobRoutes = require('./routes/Master/JobRoute');
 const tripRoutes = require('./routes/Master/TripRoute');
-const travelReport = require('./routes/TrevelSummaryRoute')
+const travelReport = require('./routes/TravelSummaryRoute')
+const loginRoutes = require('./routes/LoginRoute')
+const userRoutes = require('./routes/UserRoute')
+const preferencesRoutes = require('./routes/PreferencesRoute')
 // Use routes
 app.use('/company', companyRoutes);
+app.use('/alerts', alertRoutes);
+app.use('/remainder', remainderRoutes);
+app.use('/login',loginRoutes);
 app.use('/counter', counterRoutes);
+app.use('/preferences', preferencesRoutes);
 app.use('/driver', driverRoutes);
 app.use('/locations', locationRoutes);
 app.use('/expense', expenseRoutes);
 app.use('/announcement', announcementRoutes);
 app.use('/job', jobRoutes);
+app.use('/user', userRoutes);
 app.use('/trip', tripRoutes);
 app.use('/device', deviceRoutes);
 app.use('/reports', travelReport)
@@ -58,5 +68,5 @@ const PORT = process.env.PORT || 3002;
 
 // Server listening
 app.listen(PORT, '0.0.0.0', () => {  // Make sure the server listens on all network interfaces
-  console.log(`Server is running on PORT: ${PORT}`);
+  console.log(`Server is running on PORT: 3000`);
 });

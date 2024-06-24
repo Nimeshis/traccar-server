@@ -1,7 +1,10 @@
 const express = require("express");
-const router = express.Router();
+const axios = require("axios");
 const UserModel = require("../models/UserModel");
+const CounterModel = require("../models/CounterModel");
 const bodyParser = require("body-parser");
+
+const router = express.Router();
 
 router.use(bodyParser.json());
 
@@ -15,6 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Create a new user
 router.post("/", async (req, res) => {
   try {
     let userCounter = await CounterModel.findOneAndUpdate(
@@ -25,11 +29,9 @@ router.post("/", async (req, res) => {
 
     // Assign the incremented sequence value as the id of the new user
     const newUserData = {
-      user_id: userCounter.sequence_value,
-      email: req.body.email,
-      password: req.body.password,
+      ...req.body,
+      id: userCounter.sequence_value,
     };
-    // Find and increment the current CompanyId counter
 
     // Create a new User instance
     const newUser = new UserModel(newUserData);
@@ -48,19 +50,16 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Assuming user_id is the field for the user's ID
-    let user = await UserModel.findOne({ user_id: id });
+    let user = await UserModel.findOne({ id: id });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Update user fields
-    user.name = req.body.name || user.name;
-    user.address = req.body.address || user.address;
-    user.phone = req.body.phone || user.phone;
-    user.email = req.body.email || user.email;
-    user.password = req.body.password || user.password;
+    Object.keys(req.body).forEach(key => {
+      user[key] = req.body[key] !== undefined ? req.body[key] : user[key];
+    });
 
     // Save the updated user
     const updatedUser = await user.save();
@@ -75,15 +74,14 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Assuming user_id is the field for the user's ID
-    const user = await UserModel.findOne({ user_id: id });
+    const user = await UserModel.findOne({ id: id });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Remove the user from the database
-    await UserModel.deleteOne({ user_id: id });
+    await UserModel.deleteOne({ id: id });
     res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -97,6 +95,37 @@ router.delete("/", async (req, res) => {
     res.json({ message: "All users deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+// Forward data to external and local URLs
+router.post("/forward-data", async (req, res) => {
+  try {
+    // Step 1: Make a POST request to the first URL
+    const postUrl = 'http://108.181.195.185:8082/api/users';
+    const postData = req.body; // Assuming the incoming data is in the request body
+
+    const postResponse = await axios.post(postUrl, postData);
+
+    // Check if the request was successful
+    if (postResponse.status === 200) {
+      const responseData = postResponse.data;
+
+      // Step 2: Make a POST request to the second URL with the saved response
+      const getUrl = 'http://localhost:3002/users';
+      const secondPostResponse = await axios.post(getUrl, responseData);
+
+      // Check if the request was successful
+      if (secondPostResponse.status === 200) {
+        res.status(200).send('Data successfully saved to the second URL.');
+      } else {
+        res.status(secondPostResponse.status).send('Failed to save data to the second URL.');
+      }
+    } else {
+      res.status(postResponse.status).send('Failed to retrieve data from the first URL.');
+    }
+  } catch (error) {
+    res.status(500).send('An error occurred: ' + error.message);
   }
 });
 
